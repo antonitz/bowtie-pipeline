@@ -2,7 +2,7 @@
 #GCS Bucket Terraform State will be stored
 terraform {
   backend "gcs" {
-    bucket = "PROJECT_ID-tfstate"
+    bucket = "${var.project_id}-tfstate"
     prefix = "env/production"
   }
 }
