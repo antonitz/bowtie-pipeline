@@ -1,0 +1,39 @@
+#Initial deploy of Terraform
+On GitHub, navigate to the main page of your repository
+Navigate to  main.tf located at [repo/env/production/] and click "edit this file" at the top right
+Delete line 1 "#Delete this line"
+Scroll to the bottom and select " Create a new branch for this commit and start a pull request." option
+IMPORTANT name the branch Production then select Proposed changes
+Click "Create pull request"
+
+#Cloud Build check
+After the pull request you will see a Cloud Build check running naviagte through "Details" to watch your changes being deployed
+Once Cloud Build is done and all checks passed you will about able to view the new infrastructure.
+
+#Check infrastructure 
+Navigation menu > VPC Network
+Verify default VPC bowtie-production
+
+Navigation menu > VPC Network > firewall
+Verify Firewall bowtie-allow-http
+
+Navigation menu > Compute Engine
+Verify VM bowtie-webserver 
+
+#Verify the webserver is accessibe
+in Cloud shell run gcloud compute instances describe bowtie-webserver --zone us-central1-a | grep natIP
+Copy and paste the IP into your web browser
+It should eventually timeout reason being is we have the wrong target tag assigned to the VM
+
+#Update target tag in Github
+Navigate back to github and to main.tf
+On line 44 change tags = ["server1"] to tags = ["bowtie-http"]
+Scroll to the bottom and select " Create a new branch for this commit and start a pull request." option
+**IMPORTANT** name the branch Production then select Proposed changes
+Click "Create pull request"
+
+#Verify the webserver is accessibe after changes
+in Cloud shell run gcloud compute instances describe bowtie-webserver --zone us-central1-a | grep natIP
+Copy and paste the IP into your web browser
+If succucessful you should get a success page full of bowties 
+

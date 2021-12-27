@@ -1,0 +1,44 @@
+#Fork Github repository 
+On GitHub, navigate to [UR-LLink]
+In the top-right corner of the page, click Fork.
+
+
+#Git Clone
+In Cloud Shell (or local terminal), clone this forked repository, replacing your-github-username with your GitHub username:
+
+cd ~
+git clone https://github.com/your-github-username/[URL-LINK]
+cd ~/[REPO]
+
+#Terraform Files
+Env/production folder houses the IaC files needed for this lab:
+backend.tf
+main.tf
+output.tf
+startup.sh
+vars.tf
+
+
+#Configure Terraform to utilize a Cloud Storage as a backend 
+In Cloudshell run:
+PROJECT_ID=$(gcloud config get-value project)
+gsutil mb gs://${PROJECT_ID}-tfstate
+
+  * Bonus enable versioning for best practise 
+    gsutil versioning set on gs://${PROJECT_ID}-tfstate
+
+#Replace the PROJECT_ID placeholder with the project ID in both the vars.tf and backend.tf files:
+
+cd ~/[REPO]
+sed -i s/PROJECT_ID/$PROJECT_ID/g environments/production/vars
+sed -i s/PROJECT_ID/$PROJECT_ID/g environments/production/backend.tf
+
+
+#Commit your github changes running the following
+git status
+git add --all
+git commit -m "Update project IDs and buckets"
+git push origin main
+
+
+

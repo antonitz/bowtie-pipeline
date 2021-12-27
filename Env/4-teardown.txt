@@ -1,0 +1,26 @@
+Delete the VM
+gcloud compute instances delete bowtie-webserver --zone us-central1-a
+
+Delete Firewall
+gcloud compute firewall-rules delete bowtie-allow-http 
+
+Delete Subnet
+gcloud compute networks subnets delete bowtie-production-central --region us-central1
+
+Delete VPC
+gcloud compute networks delete bowtie-production
+
+Delete Cloud Build Trigger
+gcloud beta builds triggers delete $Name
+
+
+*** Delete Project***
+In the Cloud Console, go to the Manage resources page.
+In the project list, select the project that you want to delete, and then click Delete.
+In the dialog, type the project ID, and then click Shut down to delete the project.
+
+Delete repository
+In GitHub, go to the main page of your forked repository.
+Under your repository name, click Settings.
+Scroll down to the Danger Zone.
+Click Delete this repository, and follow the confirmation steps.
